@@ -104,6 +104,8 @@ function ProfileMockup() {
   )
 }
 
+
+
 // ── Animated SVG Illustration ────────────────────────────────────────────────
 function FloatingOrb() {
   return (
@@ -325,7 +327,7 @@ export default function Hero() {
           {/* Heading with word-by-word reveal */}
           <h1
             ref={headingRef}
-            className="text-4xl sm:text-5xl lg:text-[4.2rem] font-black text-[#0F172A] leading-[1.05] tracking-tight mb-6"
+            className="text-[1.85rem] leading-[1.2] sm:text-5xl lg:text-[4.2rem] font-black text-[#0F172A] tracking-tight mb-6 px-1"
             style={{ perspective: '800px' }}
           >
             {'Manage Events'.split(' ').map((w, i) => (
@@ -338,11 +340,10 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Sub */}
           <p
             ref={subRef}
             style={{ opacity: 0 }}
-            className="text-lg sm:text-xl text-[#475569] leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 font-medium"
+            className="text-[0.95rem] sm:text-xl text-[#475569] leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0 font-medium px-4 sm:px-0"
           >
             Evnity helps students organize, track, and participate in events
             seamlessly — from registration to real-time updates, all in one place.
@@ -369,17 +370,17 @@ export default function Hero() {
           </div>
 
           {/* Proof strip */}
-          <div ref={statsRef} style={{ opacity: 0 }} className="mt-14 flex items-center justify-center lg:justify-start gap-10 flex-wrap">
+          <div ref={statsRef} style={{ opacity: 0 }} className="mt-14 grid grid-cols-2 xs:flex items-center justify-center lg:justify-start gap-8 sm:gap-10 flex-wrap">
             {[
               { target: 10, suffix: 'K+', label: 'Active users' },
               { target: 500, suffix: '+', label: 'Events hosted' },
               { target: 4.9, suffix: '★', label: 'App rating' },
             ].map(({ target, suffix, label }) => (
               <div key={label} className="text-center lg:text-left group">
-                <p className="text-2xl font-black text-[#0F172A] group-hover:text-[#1E40AF] transition-colors duration-300">
+                <p className="text-xl sm:text-2xl font-black text-[#0F172A] group-hover:text-[#1E40AF] transition-colors duration-300">
                   <AnimatedCounter target={target} suffix={suffix} duration={1.8} />
                 </p>
-                <p className="text-[0.7rem] font-bold text-[#94A3B8] uppercase tracking-widest mt-0.5">{label}</p>
+                <p className="text-[0.65rem] sm:text-[0.7rem] font-bold text-[#94A3B8] uppercase tracking-widest mt-0.5">{label}</p>
               </div>
             ))}
           </div>
@@ -390,7 +391,7 @@ export default function Hero() {
           ref={mockupsWrapperRef}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          className="flex justify-center items-end gap-6 relative perspective h-[520px]"
+          className="flex flex-col sm:flex-row justify-center items-center lg:items-end gap-10 sm:gap-6 relative perspective h-auto lg:h-[520px] py-10 lg:py-0"
           style={{ opacity: 0 }}
         >
           <motion.div
@@ -399,34 +400,37 @@ export default function Hero() {
           >
             {/* Ambient glow */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <div className="w-[420px] h-[420px] bg-[#3B60D4]/10 rounded-full blur-[120px]" />
+              <div className="w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] bg-[#3B60D4]/10 rounded-full blur-[80px] sm:blur-[120px]" />
             </div>
 
-            {/* Profile card */}
-            <motion.div
-              animate={{ y: [0, -14, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-              className="relative z-10 mt-10 will-change-transform"
-              style={{ translateZ: '50px' }}
-            >
-              <ProfileMockup />
-            </motion.div>
+            {/* Mockup Stack */}
+            <div className="flex flex-col sm:flex-row justify-center items-center lg:items-end gap-12 sm:gap-6 relative z-10 w-full sm:w-auto">
+              {/* Profile card */}
+              <motion.div
+                animate={{ y: [0, -14, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                className="relative z-10 will-change-transform scale-[0.8] xs:scale-90 sm:scale-100 origin-bottom transition-transform"
+                style={{ translateZ: '50px' }}
+              >
+                <ProfileMockup />
+              </motion.div>
 
-            {/* Event card — main */}
-            <motion.div
-              animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-20 will-change-transform"
-              style={{ translateZ: '100px' }}
-            >
-              <EventMockup />
-            </motion.div>
+              {/* Event card — main */}
+              <motion.div
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative z-20 will-change-transform scale-90 sm:scale-100 origin-bottom transition-transform"
+                style={{ translateZ: '100px' }}
+              >
+                <EventMockup />
+              </motion.div>
+            </div>
 
             {/* Floating badge: Registered */}
             <motion.div
               animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-              className="absolute -right-8 top-20 glass rounded-2xl p-3 flex items-center gap-3 z-40 shadow-premium"
+              className="absolute -right-2 lg:-right-8 top-12 lg:top-20 glass rounded-2xl p-2 lg:p-3 flex items-center gap-3 z-40 shadow-premium scale-[0.6] lg:scale-100 origin-right transition-transform"
               style={{ translateZ: '150px' }}
             >
               <div className="w-9 h-9 rounded-xl bg-[#EFF4FF] flex items-center justify-center shadow-sm">
@@ -442,7 +446,7 @@ export default function Hero() {
             <motion.div
               animate={{ y: [0, -12, 0], x: [0, -5, 0] }}
               transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-              className="absolute -left-6 bottom-24 glass rounded-2xl p-3 z-40 shadow-premium"
+              className="absolute -left-2 lg:-left-6 bottom-20 lg:bottom-24 glass rounded-2xl p-2 lg:p-3 z-40 shadow-premium scale-[0.6] lg:scale-100 origin-left transition-transform"
               style={{ translateZ: '130px' }}
             >
               <div className="flex items-center gap-3">
@@ -457,13 +461,13 @@ export default function Hero() {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 22, repeat: Infinity, ease: 'linear' }}
-              className="absolute top-[15%] left-0 w-20 h-20 border border-[#1E40AF]/10 rounded-[2rem] -z-10"
+              className="absolute top-[15%] left-0 w-20 h-20 border border-[#1E40AF]/10 rounded-[2rem] -z-10 hidden sm:block"
               style={{ translateZ: '-20px' }}
             />
             <motion.div
               animate={{ rotate: -360 }}
               transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-              className="absolute bottom-[20%] right-0 w-16 h-16 border border-[#3B60D4]/10 rounded-full -z-10"
+              className="absolute bottom-[20%] right-0 w-16 h-16 border border-[#3B60D4]/10 rounded-full -z-10 hidden sm:block"
               style={{ translateZ: '-40px' }}
             />
           </motion.div>
