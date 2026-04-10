@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Smartphone, Star } from 'lucide-react'
+import Magnetic from './Magnetic'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,74 +25,117 @@ function AppleIcon() {
 
 export default function Download() {
   const sectionRef = useRef(null)
-  const contentRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(contentRef.current,
-        { opacity: 0, y: 36 },
-        { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out',
-          scrollTrigger: { trigger: contentRef.current, start: 'top 78%' } }
+      // Staggered reveal for all content children
+      gsap.fromTo('.dl-content > *',
+        { opacity: 0, y: 32, scale: 0.97 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.75, ease: 'power3.out', stagger: 0.1,
+          scrollTrigger: { trigger: '#download', start: 'top 80%' }
+        }
       )
+
+      // Stars animate in one by one
+      gsap.fromTo('.dl-star',
+        { opacity: 0, scale: 0, rotate: -30 },
+        {
+          opacity: 1, scale: 1, rotate: 0,
+          duration: 0.4, ease: 'back.out(2)', stagger: 0.07,
+          scrollTrigger: { trigger: '.dl-stars', start: 'top 88%' }
+        }
+      )
+
+      // Parallax background orb
+      gsap.to('.dl-orb', {
+        y: -50, ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom', end: 'bottom top', scrub: 1.5,
+        }
+      })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
   return (
-    <section id="download" ref={sectionRef} className="section-pad bg-[#EFF4FF]">
-      <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center" ref={contentRef} style={{ opacity: 0 }}>
-        {/* Icon */}
-        <div className="w-16 h-16 rounded-2xl bg-[#1E40AF] flex items-center justify-center mx-auto mb-6 shadow-[0_8px_24px_rgba(30,64,175,0.25)]">
-          <Smartphone size={28} className="text-white" />
-        </div>
+    <section id="download" ref={sectionRef} className="section-pad bg-white relative overflow-hidden">
+      {/* Layered background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="dl-orb absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#EFF4FF] rounded-full blur-[140px] opacity-50" />
+        <div className="absolute top-0 right-0 w-[30%] h-[50%] bg-[#3B60D4]/05 blur-[100px] rounded-full" />
+      </div>
 
-        <span className="inline-block text-xs font-semibold text-[#1E40AF] bg-white border border-[#BFD0F5] px-3 py-1.5 rounded-full mb-5 tracking-wide uppercase">
-          Download
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight mb-4">
-          Get Evnity on your device
-        </h2>
-        <p className="text-[#475569] text-base leading-relaxed mb-10 max-w-md mx-auto">
-          Free to download. Available on Android and iOS. Join thousands of students already using Evnity.
-        </p>
-
-        {/* Rating */}
-        <div className="flex items-center justify-center gap-1.5 mb-8">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={16} className="text-[#FBBF24]" fill="#FBBF24" />
-          ))}
-          <span className="text-[#0F172A] font-semibold text-sm ml-1">4.9</span>
-          <span className="text-[#94A3B8] text-sm">· 2,400+ ratings</span>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.button
-            whileHover={{ scale: 1.04, boxShadow: '0 12px_32px rgba(30,64,175,0.2)' }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3.5 bg-[#1E40AF] hover:bg-[#1A3697] text-white px-7 py-4 rounded-2xl shadow-[0_4px_16px_rgba(30,64,175,0.25)] transition-colors font-semibold"
+      <div className="max-w-4xl mx-auto px-5 sm:px-8 text-center relative z-10">
+        <div className="dl-content flex flex-col items-center">
+          {/* Floating app icon */}
+          <motion.div
+            animate={{ y: [0, -12, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-24 h-24 rounded-[2.2rem] bg-[#1E40AF] flex items-center justify-center mx-auto mb-8 shadow-premium"
+            style={{ boxShadow: '0 20px 50px rgba(30,64,175,0.3)' }}
           >
-            <AndroidIcon />
-            <div className="text-left">
-              <p className="text-[10px] text-white/70 font-medium uppercase tracking-wide leading-none mb-0.5">Get it on</p>
-              <p className="text-base font-bold leading-none" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Google Play</p>
-            </div>
-          </motion.button>
+            <Smartphone size={36} className="text-white" />
+          </motion.div>
 
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3.5 bg-white hover:bg-[#F8FAFF] text-[#0F172A] border border-[#E2E8F0] px-7 py-4 rounded-2xl shadow-[0_2px_12px_rgba(30,64,175,0.08)] transition-colors font-semibold"
-          >
-            <AppleIcon />
-            <div className="text-left">
-              <p className="text-[10px] text-[#94A3B8] font-medium uppercase tracking-wide leading-none mb-0.5">Download on the</p>
-              <p className="text-base font-bold leading-none text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>App Store</p>
+          <span className="inline-block text-[0.7rem] font-black text-[#1E40AF] bg-[#EFF4FF] border border-[#BFD0F5] px-4 py-2 rounded-xl mb-6 tracking-[0.2em] uppercase shadow-sm">
+            Availability
+          </span>
+
+          <h2 className="text-4xl sm:text-5xl lg:text-[3.5rem] font-black text-[#0F172A] tracking-tighter mb-6 leading-[1.08]">
+            Ready to Amplify<br className="hidden sm:block" /> Your Events?
+          </h2>
+
+          <p className="text-[#475569] text-lg font-medium leading-relaxed mb-12 max-w-lg">
+            Free to download and open for everyone. Available on Android and iOS. Join the elite group of student organizers today.
+          </p>
+
+          {/* Star rating */}
+          <div className="dl-stars flex items-center justify-center gap-2 mb-12">
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={20} className="dl-star text-[#FBBF24]" fill="#FBBF24" />
+              ))}
             </div>
-          </motion.button>
+            <span className="text-[#0F172A] font-black text-xl ml-2">4.9</span>
+            <span className="text-[#94A3B8] font-bold text-sm tracking-wide">/ 5.0 Rating</span>
+          </div>
+
+          {/* Download buttons */}
+          <div className="flex flex-col sm:flex-row gap-5 justify-center">
+            <Magnetic strength={0.25}>
+              <button
+                className="btn-primary inline-flex items-center gap-4 bg-[#1E40AF] text-white px-9 py-5 rounded-[1.5rem] shadow-premium font-bold card-shine"
+              >
+                <AndroidIcon />
+                <div className="text-left">
+                  <p className="text-[0.6rem] text-white/70 font-black uppercase tracking-widest leading-none mb-1">Get it on</p>
+                  <p className="text-lg font-black leading-none" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Google Play</p>
+                </div>
+              </button>
+            </Magnetic>
+
+            <Magnetic strength={0.25}>
+              <button
+                className="btn-secondary inline-flex items-center gap-4 bg-white text-[#0F172A] border-2 border-[#E2E8F0] px-9 py-5 rounded-[1.5rem] font-bold card-shine"
+              >
+                <AppleIcon />
+                <div className="text-left">
+                  <p className="text-[0.6rem] text-[#94A3B8] font-black uppercase tracking-widest leading-none mb-1">Download on</p>
+                  <p className="text-lg font-black leading-none" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>App Store</p>
+                </div>
+              </button>
+            </Magnetic>
+          </div>
+
+          <div className="mt-12 flex items-center justify-center gap-8">
+            <p className="text-[#94A3B8] text-[0.7rem] font-bold uppercase tracking-widest">v1.2.0 Stable Build</p>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#E2E8F0]" />
+            <p className="text-[#94A3B8] text-[0.7rem] font-bold uppercase tracking-widest">Beta Access Open</p>
+          </div>
         </div>
-
-        <p className="text-[#94A3B8] text-xs mt-8">Coming soon to both platforms · Sign up to be notified</p>
       </div>
     </section>
   )
