@@ -195,11 +195,11 @@ function AnimatedCounter({ target, suffix = '', duration = 2 }) {
 // ────────────────────────────────────────────────────────────────────────────
 export default function Hero() {
   const containerRef = useRef(null)
-  const headingRef  = useRef(null)
-  const subRef      = useRef(null)
-  const ctaRef      = useRef(null)
-  const badgeRef    = useRef(null)
-  const statsRef    = useRef(null)
+  const headingRef = useRef(null)
+  const subRef = useRef(null)
+  const ctaRef = useRef(null)
+  const badgeRef = useRef(null)
+  const statsRef = useRef(null)
   const mockupsWrapperRef = useRef(null)
 
   // Mouse tilt for mockup cluster
@@ -236,8 +236,8 @@ export default function Hero() {
       // ── Staggered reveal for badge, sub, cta, stats ───────────────
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
       tl.fromTo(badgeRef.current,
-          { opacity: 0, y: 24, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7 }, 0)
+        { opacity: 0, y: 24, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7 }, 0)
         .fromTo(subRef.current,
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.7 }, 0.65)
@@ -372,9 +372,9 @@ export default function Hero() {
           {/* Proof strip */}
           <div ref={statsRef} style={{ opacity: 0 }} className="mt-14 grid grid-cols-2 xs:flex items-center justify-center lg:justify-start gap-8 sm:gap-10 flex-wrap">
             {[
-              { target: 10, suffix: 'K+', label: 'Active users' },
-              { target: 500, suffix: '+', label: 'Events hosted' },
-              { target: 4.9, suffix: '★', label: 'App rating' },
+              { target: 100, suffix: '+', label: 'Active users' },
+              { target: 15, suffix: '+', label: 'Events hosted' },
+              { target: 5.0, suffix: '★', label: 'App rating' },
             ].map(({ target, suffix, label }) => (
               <div key={label} className="text-center lg:text-left group">
                 <p className="text-xl sm:text-2xl font-black text-[#0F172A] group-hover:text-[#1E40AF] transition-colors duration-300">

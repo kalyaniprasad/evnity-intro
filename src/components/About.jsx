@@ -2,15 +2,15 @@ import { useEffect, useRef } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { CheckCircle2, Target, Users, TrendingUp, Zap } from 'lucide-react'
+import { Compass, Users2, FileSpreadsheet, ShieldCheck, Zap } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const PILLARS = [
-  { icon: Target, label: 'Student-first design' },
-  { icon: Users, label: 'Built for collaborating teams' },
-  { icon: TrendingUp, label: 'Data-driven event insights' },
-  { icon: CheckCircle2, label: 'Seamless registration flow' },
+  { icon: Compass, label: 'Student-Centric Discovery' },
+  { icon: Users2, label: 'Professional Club Suite' },
+  { icon: FileSpreadsheet, label: 'Automated Data Export' },
+  { icon: ShieldCheck, label: 'Robust Firebase Auth' },
 ]
 
 function AppCard() {
@@ -32,7 +32,7 @@ function AppCard() {
   }
 
   return (
-    <motion.div 
+    <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { x.set(0); y.set(0); }}
@@ -41,19 +41,19 @@ function AppCard() {
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[#0F172A] text-[0.9rem] font-black" style={{fontFamily:"'Plus Jakarta Sans',sans-serif"}}>Event Overview</p>
+          <p className="text-[#0F172A] text-[0.9rem] font-black" style={{ fontFamily: "'Plus Jakarta Sans',sans-serif" }}>Event Overview</p>
           <p className="text-[#94A3B8] text-xs font-bold mt-1 uppercase tracking-wider">Dashboard · June 2025</p>
         </div>
         <div className="flex items-center gap-2 text-[0.65rem] font-black text-[#1E40AF] bg-[#EFF4FF] border border-[#BFD0F5] px-3 py-1.5 rounded-xl uppercase tracking-widest">
-           <Zap size={10} fill="#1E40AF" /> Live
+          <Zap size={10} fill="#1E40AF" /> Demo
         </div>
       </div>
 
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-4">
-        {[['247','Reg.', '#EFF4FF'],['18','Teams', '#F0FDF4'],['94%','Rate', '#FFF7ED']].map(([v,l,c]) => (
+        {[['247', 'Reg.', '#EFF4FF'], ['18', 'Teams', '#F0FDF4'], ['94%', 'Rate', '#FFF7ED']].map(([v, l, c]) => (
           <div key={l} className="rounded-2xl p-3 text-center border border-[#E2E8F0] shadow-sm hover:border-[#BFD0F5] transition-colors" style={{ backgroundColor: '#fff' }}>
-            <p className="text-xl font-black text-[#1E40AF]" style={{fontFamily:"'Plus Jakarta Sans',sans-serif"}}>{v}</p>
+            <p className="text-xl font-black text-[#1E40AF]" style={{ fontFamily: "'Plus Jakarta Sans',sans-serif" }}>{v}</p>
             <p className="text-[#94A3B8] text-[0.6rem] font-bold uppercase mt-1 tracking-tighter">{l}</p>
           </div>
         ))}
@@ -80,14 +80,15 @@ function AppCard() {
       <div className="space-y-3">
         <p className="text-[0.65rem] font-black text-[#94A3B8] uppercase tracking-[0.15em]">Live Feed</p>
         {[
-          { name: 'Priya N.', action: 'created Team Alpha', time: '2m ago' },
-          { name: 'Rohan M.', action: 'locked submission', time: '14m ago' },
-          { name: 'Sneha P.', action: 'verified email', time: '31m ago' },
+          { name: 'Soumya Tarate', action: 'created Team Alpha', time: '2m ago' },
+          { name: 'Prasad Kalyani', action: 'locked submission', time: '14m ago' },
+          { name: 'Shreyash Dubewar', action: 'verified email', time: '31m ago' },
+          { name: 'Ajay Shriniwar', action: 'verified email', time: '3m ago' },
         ].map(({ name, action, time }) => (
           <div key={name} className="flex items-center justify-between py-2 border-b border-[#F1F5FB] last:border-0 group/feed">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-xl bg-[#EFF4FF] flex items-center justify-center flex-shrink-0 group-hover/feed:bg-[#1E40AF] transition-colors group/icon">
-                <span className="text-[#1E40AF] group-hover/feed:text-white text-[10px] font-black transition-colors">{name.split(' ').map(n=>n[0]).join('')}</span>
+                <span className="text-[#1E40AF] group-hover/feed:text-white text-[10px] font-black transition-colors">{name.split(' ').map(n => n[0]).join('')}</span>
               </div>
               <div>
                 <p className="text-[#0F172A] text-[0.75rem] font-extrabold">{name}</p>

@@ -6,7 +6,7 @@ import { Award, Mail, Linkedin, Twitter } from 'lucide-react'
 import Magnetic from './Magnetic'
 
 // Image imports
-import guideImg from '../assets/team/team_guide_kavitha_1775814363111.png'
+import guideImg from '../assets/team/guide.png'
 import arjunImg from '../assets/team/team_member_arjun_1775814163242.png'
 import priyaImg from '../assets/team/team_member_priya_1775814237484.png'
 import rohanImg from '../assets/team/team_member_rohan_1775814255085.png'
@@ -15,17 +15,18 @@ import snehaImg from '../assets/team/team_member_sneha_1775814272613.png'
 gsap.registerPlugin(ScrollTrigger)
 
 const GUIDE = {
-  name: 'Dr. Kavitha Menon',
-  role: 'Associate Professor, Computer Science',
+  name: 'Dr. Rachana Yogesh Patil',
+  role: 'Associate Professor & Computer Regional Head',
   image: guideImg,
-  bio: 'With 14 years of experience in distributed systems and software engineering education, Dr. Menon guides our team with clarity, rigor, and a deep belief in student-led innovation.',
+  // bio: 'With 14 years of experience in distributed systems and software engineering education, Dr. Menon guides our team with clarity, rigor, and a deep belief in student-led innovation.',
+  bio: 'With a PhD from the University of Mumbai (2020) and over 60 publications in international journals and conferences, Dr. Rachana Y. Patil brings deep expertise in Cryptography, Network Security, Cyber Security, and Digital Forensics—particularly Network Forensics. As a member of IEEE, ACM, and IETE, she actively contributes to the research community while mentoring students and teaching specialized courses, fostering innovation and excellence in cybersecurity research.',
 }
 
 const MEMBERS = [
-  { name: 'Arjun Sharma', role: 'Full Stack Developer', image: arjunImg },
-  { name: 'Priya Nair', role: 'UI/UX Designer', image: priyaImg },
-  { name: 'Rohan Mehta', role: 'Backend Engineer', image: rohanImg },
-  { name: 'Sneha Patel', role: 'Mobile Developer', image: snehaImg },
+  { name: 'Soumya Tarate', role: 'Developer', image: priyaImg },
+  { name: 'Prasad Kalyani', role: 'Developer', image: arjunImg },
+  { name: 'Shreyash Dubewar', role: 'Developer', image: arjunImg },
+  { name: 'Ajay Shriniwar', role: 'Developer', image: rohanImg },
 ]
 
 function TiltCard({ children, className }) {
@@ -81,7 +82,7 @@ function MemberCard({ name, role, image }) {
             {name}
           </p>
           <p className="text-[#94A3B8] text-[0.8rem] font-bold uppercase tracking-wider mb-4">{role}</p>
-          
+
           <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
             {[Linkedin, Twitter, Mail].map((Icon, i) => (
               <Magnetic key={i} strength={0.2}>
@@ -99,8 +100,8 @@ function MemberCard({ name, role, image }) {
 
 export default function Team() {
   const sectionRef = useRef(null)
-  const guideRef   = useRef(null)
-  const gridRef    = useRef(null)
+  const guideRef = useRef(null)
+  const gridRef = useRef(null)
 
   useEffect(() => {
     if (!sectionRef.current) return
