@@ -1,14 +1,24 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Zap } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
 import Magnetic from './Magnetic'
 
-const NAV_LINKS = ['Home', 'About', 'Features', 'Team', 'Download', 'Contact']
+const NAV_LINKS = [
+  { name: 'Home', href: '/#home', id: 'home' },
+  { name: 'About', href: '/#about', id: 'about' },
+  { name: 'Features', href: '/#features', id: 'features' },
+  { name: 'Team', href: '/#team', id: 'team' },
+  { name: 'Download', href: '/#download', id: 'download' },
+  { name: 'Contact', href: '/#contact', id: 'contact' },
+  { name: 'Privacy', href: '/privacy-policy', id: 'privacy' }
+]
 
 export default function Navbar() {
   const [scrolled, setScrolled]       = useState(false)
   const [mobileOpen, setMobileOpen]   = useState(false)
   const [activeSection, setActive]    = useState('home')
+  const location = useLocation()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20)
@@ -18,19 +28,25 @@ export default function Navbar() {
 
   // Track active section via IntersectionObserver
   useEffect(() => {
+    if (location.pathname !== '/') {
+      if (location.pathname === '/privacy-policy') setActive('privacy')
+      return
+    }
+
     const observers = []
     NAV_LINKS.forEach((link) => {
-      const el = document.getElementById(link.toLowerCase())
+      if (link.id === 'privacy') return
+      const el = document.getElementById(link.id)
       if (!el) return
       const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(link.toLowerCase()) },
+        ([entry]) => { if (entry.isIntersecting) setActive(link.id) },
         { rootMargin: '-40% 0px -50% 0px', threshold: 0 }
       )
       obs.observe(el)
       observers.push(obs)
     })
     return () => observers.forEach((o) => o.disconnect())
-  }, [])
+  }, [location.pathname])
 
   const closeMobile = () => setMobileOpen(false)
 
@@ -48,8 +64,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
         {/* Logo */}
         <Magnetic strength={0.2}>
-          <a
-            href="#home"
+          <Link
+            to="/#home"
             className="flex items-center gap-2.5 focus-visible:outline-none group relative z-[110]"
           >
             <motion.div 
@@ -64,21 +80,21 @@ export default function Navbar() {
             >
               Evnity
             </span>
-          </a>
+          </Link>
         </Magnetic>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
           {NAV_LINKS.map((link) => {
-            const isActive = activeSection === link.toLowerCase()
+            const isActive = activeSection === link.id
             return (
-              <Magnetic key={link} strength={0.2}>
-                <a
-                  href={`#${link.toLowerCase()}`}
+              <Magnetic key={link.name} strength={0.2}>
+                <Link
+                  to={link.href}
                   className={`relative px-3.5 py-2 text-sm font-semibold transition-colors duration-200 rounded-lg
                     ${isActive ? 'text-[#1E40AF]' : 'text-[#475569] hover:text-[#1E40AF] hover:bg-[#EFF4FF]/60'}`}
                 >
-                  {link}
+                  {link.name}
                   {isActive && (
                     <motion.span
                       layoutId="nav-active-bar"
@@ -89,7 +105,7 @@ export default function Navbar() {
                   {!isActive && (
                     <span className="absolute bottom-0 left-3 right-3 h-0.5 bg-[#1E40AF] origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 transition-transform duration-300" />
                   )}
-                </a>
+                </Link>
               </Magnetic>
             )
           })}
@@ -97,7 +113,7 @@ export default function Navbar() {
             <motion.a
               whileHover={{ scale: 1.05, backgroundColor: '#1A3697', y: -2 }}
               whileTap={{ scale: 0.95 }}
-              href="#download"
+              href="/#download"
               className="ml-4 px-6 py-2.5 bg-[#1E40AF] text-white text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition-all duration-200"
             >
               Get the App
@@ -137,28 +153,27 @@ export default function Navbar() {
             >
               <div className="p-4 flex flex-col gap-2">
                 {NAV_LINKS.map((link) => (
-                  <a
-                    key={link}
-                    href={`#${link.toLowerCase()}`}
+                  <Link
+                    key={link.name}
+                    to={link.href}
                     onClick={closeMobile}
                     className="text-left px-5 py-4 text-[1rem] font-bold text-[#475569] hover:text-[#1E40AF] hover:bg-[#EFF4FF] rounded-2xl transition-all active:scale-[0.98]"
                   >
-                    {link}
-                  </a>
+                    {link.name}
+                  </Link>
                 ))}
-                <a
-                  href="#download"
+                <Link
+                  to="/#download"
                   onClick={closeMobile}
                   className="mt-4 px-5 py-5 bg-[#1E40AF] text-white text-[1rem] font-black rounded-2xl shadow-lg active:scale-[0.98] transition-transform text-center"
                 >
                   Get the App
-                </a>
+                </Link>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
     </motion.header>
-
   )
 }

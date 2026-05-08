@@ -8,7 +8,8 @@
     "gsap": "^3.12.5",
     "lucide-react": "^0.383.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
@@ -21,5 +22,17 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
-  }
+  },
+  "description": "A clean, professional single-page landing site for the **Evnity** event management app.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalyaniprasad/evnity-intro.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalyaniprasad/evnity-intro/issues"
+  },
+  "homepage": "https://github.com/kalyaniprasad/evnity-intro#readme"
 }

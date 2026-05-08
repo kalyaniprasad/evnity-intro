@@ -1,7 +1,16 @@
 import { motion } from 'framer-motion'
 import { Zap, Mail, Github, Linkedin, Instagram } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
-const NAV_LINKS = ['Home', 'About', 'Features', 'Team', 'Download', 'Contact']
+const NAV_LINKS = [
+  { name: 'Home', id: 'home' },
+  { name: 'About', id: 'about' },
+  { name: 'Features', id: 'features' },
+  { name: 'Team', id: 'team' },
+  { name: 'Download', id: 'download' },
+  { name: 'Contact', id: 'contact' }
+]
+
 const SOCIALS = [
   { icon: Linkedin, label: 'LinkedIn' },
   { icon: Github, label: 'GitHub' },
@@ -9,18 +18,8 @@ const SOCIALS = [
 ]
 
 export default function Footer() {
-  const scrollTo = (id) => {
-    const el = document.getElementById(id.toLowerCase())
-    if (el) {
-      window.scrollTo({
-        top: el.offsetTop - 80,
-        behavior: 'smooth'
-      })
-    }
-  }
-
   return (
-    <footer className="bg-white border-t border-[#E2E8F0] relative overflow-hidden h-[400px] flex flex-col justify-between">
+    <footer className="bg-white border-t border-[#E2E8F0] relative overflow-hidden min-h-[400px] lg:h-[400px] flex flex-col justify-between">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -38,14 +37,14 @@ export default function Footer() {
         <div className="py-12 lg:py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 items-start relative z-10">
           {/* Brand */}
           <div className="lg:col-span-2">
-            <button onClick={() => scrollTo('home')} className="flex items-center gap-3 mb-6 group">
+            <Link to="/#home" className="flex items-center gap-3 mb-6 group">
               <div className="w-10 h-10 rounded-xl bg-[#1E40AF] flex items-center justify-center shadow-md group-hover:rotate-12 transition-transform">
                 <Zap size={20} className="text-white" fill="white" />
               </div>
               <span className="text-[#0F172A] font-black text-2xl tracking-tighter" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Evnity
               </span>
-            </button>
+            </Link>
             <p className="text-[#475569] text-base leading-relaxed max-w-xs mb-6 font-medium">
               Manage events effortlessly. The student-first event platform designed for modern campus life.
             </p>
@@ -65,14 +64,14 @@ export default function Footer() {
             </p>
             <ul className="space-y-4">
               {NAV_LINKS.map((link) => (
-                <li key={link}>
-                  <button
-                    onClick={() => scrollTo(link)}
+                <li key={link.id}>
+                  <Link
+                    to={`/#${link.id}`}
                     className="text-[#475569] hover:text-[#1E40AF] text-[0.95rem] transition-colors font-bold flex items-center gap-2 group"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-[#E2E8F0] group-hover:bg-[#1E40AF] transition-colors" />
-                    {link}
-                  </button>
+                    {link.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -109,7 +108,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Evnity Platform.
           </p>
           <div className="flex items-center gap-6">
-            <p className="text-[#94A3B8] text-[0.8rem] font-bold hover:text-[#1E40AF] cursor-pointer transition-colors">Privacy</p>
+            <Link to="/privacy-policy" className="text-[#94A3B8] text-[0.8rem] font-bold hover:text-[#1E40AF] transition-colors">Privacy Policy</Link>
             <p className="text-[#94A3B8] text-[0.8rem] font-bold hover:text-[#1E40AF] cursor-pointer transition-colors">Terms</p>
           </div>
         </div>
@@ -117,4 +116,3 @@ export default function Footer() {
     </footer>
   )
 }
-
